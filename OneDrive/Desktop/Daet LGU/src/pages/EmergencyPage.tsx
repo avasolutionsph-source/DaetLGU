@@ -376,7 +376,7 @@ export default function EmergencyPage() {
       <header className="sticky top-0 z-30 border-b border-red-900/40 bg-gray-950/95 backdrop-blur">
         <div className="mx-auto max-w-[1600px] px-6 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-            <span>SMART LGU ERP</span>
+            <span>Maogmang Daet Smart System</span>
             <ChevronRight className="w-3 h-3" />
             <span>Public Safety</span>
             <ChevronRight className="w-3 h-3" />

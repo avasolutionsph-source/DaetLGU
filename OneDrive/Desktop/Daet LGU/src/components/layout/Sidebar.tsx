@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../lib/auth';
+import { useAuth, type UserRole } from '../../lib/auth';
 import { classNames } from '../../lib/utils';
 import {
   LayoutDashboard,
@@ -32,6 +32,7 @@ interface NavItem {
   path: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: number;
+  roles: UserRole[]; // which roles can see this item
 }
 
 interface NavGroup {
@@ -39,55 +40,57 @@ interface NavGroup {
   items: NavItem[];
 }
 
+const ALL_ROLES: UserRole[] = ['mayor', 'treasury', 'bplo', 'engineering', 'mdrrmo', 'barangay', 'admin'];
+
 const NAV_GROUPS: NavGroup[] = [
   {
     title: 'MAIN',
     items: [
-      { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+      { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, roles: ALL_ROLES },
     ],
   },
   {
     title: 'SERVICES',
     items: [
-      { label: 'Business Permits', path: '/business-permits', icon: Briefcase, badge: 12 },
-      { label: 'Property Tax', path: '/property-tax', icon: Landmark },
-      { label: 'Treasury', path: '/treasury', icon: Wallet },
-      { label: 'Document Tracking', path: '/documents', icon: FileText, badge: 5 },
-      { label: 'Citizen Services', path: '/citizen-services', icon: Users },
+      { label: 'Business Permits', path: '/business-permits', icon: Briefcase, badge: 12, roles: ['mayor', 'bplo', 'admin'] },
+      { label: 'Property Tax', path: '/property-tax', icon: Landmark, roles: ['mayor', 'treasury', 'admin'] },
+      { label: 'Treasury', path: '/treasury', icon: Wallet, roles: ['mayor', 'treasury', 'admin'] },
+      { label: 'Document Tracking', path: '/documents', icon: FileText, badge: 5, roles: ['mayor', 'admin', 'bplo', 'treasury', 'engineering'] },
+      { label: 'Citizen Services', path: '/citizen-services', icon: Users, roles: ['mayor', 'bplo', 'barangay', 'admin'] },
     ],
   },
   {
     title: 'OPERATIONS',
     items: [
-      { label: 'Emergency Center', path: '/emergency', icon: ShieldAlert, badge: 3 },
-      { label: 'Infrastructure', path: '/infrastructure', icon: HardHat },
-      { label: 'GIS Mapping', path: '/gis', icon: MapPin },
+      { label: 'Emergency Center', path: '/emergency', icon: ShieldAlert, badge: 3, roles: ['mayor', 'mdrrmo', 'barangay', 'admin'] },
+      { label: 'Infrastructure', path: '/infrastructure', icon: HardHat, roles: ['mayor', 'engineering', 'admin'] },
+      { label: 'GIS Mapping', path: '/gis', icon: MapPin, roles: ['mayor', 'engineering', 'mdrrmo', 'admin'] },
     ],
   },
   {
     title: 'ANALYTICS',
     items: [
-      { label: 'Data Analytics', path: '/analytics', icon: BarChart3 },
-      { label: 'Reports', path: '/reports', icon: ClipboardList },
+      { label: 'Data Analytics', path: '/analytics', icon: BarChart3, roles: ['mayor', 'treasury', 'admin'] },
+      { label: 'Reports', path: '/reports', icon: ClipboardList, roles: ['mayor', 'treasury', 'bplo', 'engineering', 'mdrrmo', 'admin'] },
     ],
   },
   {
     title: 'ADMIN',
     items: [
-      { label: 'Barangay Office', path: '/barangay', icon: Building2 },
-      { label: 'HR & Personnel', path: '/hr', icon: UserCog },
-      { label: 'Settings', path: '/settings', icon: Settings },
-      { label: 'Audit Trail', path: '/audit', icon: ScrollText },
-      { label: 'User Management', path: '/users', icon: Shield },
-      { label: 'Help', path: '/help', icon: HelpCircle },
+      { label: 'Barangay Office', path: '/barangay', icon: Building2, roles: ['mayor', 'barangay', 'admin'] },
+      { label: 'HR & Personnel', path: '/hr', icon: UserCog, roles: ['mayor', 'admin'] },
+      { label: 'Settings', path: '/settings', icon: Settings, roles: ['mayor', 'admin'] },
+      { label: 'Audit Trail', path: '/audit-trail', icon: ScrollText, roles: ['mayor', 'admin'] },
+      { label: 'User Management', path: '/users', icon: Shield, roles: ['admin'] },
+      { label: 'Help', path: '/help', icon: HelpCircle, roles: ALL_ROLES },
     ],
   },
   {
     title: 'OFFICES',
     items: [
-      { label: 'Accounting Office', path: '/accounting', icon: Calculator },
-      { label: 'Engineering Office', path: '/engineering', icon: Construction },
-      { label: "Mayor's Office", path: '/mayors-office', icon: Crown },
+      { label: 'Accounting Office', path: '/accounting', icon: Calculator, roles: ['mayor', 'treasury', 'admin'] },
+      { label: 'Engineering Office', path: '/engineering', icon: Construction, roles: ['mayor', 'engineering', 'admin'] },
+      { label: "Mayor's Office", path: '/mayors-office', icon: Crown, roles: ['mayor', 'admin'] },
     ],
   },
 ];
@@ -100,11 +103,20 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const userRole = currentUser?.role || 'barangay';
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  // Filter nav groups based on user role
+  const filteredGroups = NAV_GROUPS
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => item.roles.includes(userRole)),
+    }))
+    .filter((group) => group.items.length > 0);
 
   return (
     <aside
@@ -121,14 +133,22 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {!collapsed && (
           <div className="min-w-0">
             <p className="truncate text-xs font-medium text-blue-300">Municipality of Daet</p>
-            <p className="truncate text-sm font-semibold tracking-wide">SMART LGU ERP</p>
+            <p className="truncate text-sm font-semibold tracking-wide">Maogmang Daet</p>
           </div>
         )}
       </div>
 
+      {/* Role indicator */}
+      {!collapsed && currentUser && (
+        <div className="mx-3 mt-3 rounded-lg bg-blue-600/10 border border-blue-500/20 px-3 py-2">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-blue-400">Logged in as</p>
+          <p className="text-xs font-medium text-slate-200 mt-0.5">{currentUser.roleLabel}</p>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-3 scrollbar-thin">
-        {NAV_GROUPS.map((group) => (
+        {filteredGroups.map((group) => (
           <div key={group.title} className="mb-1">
             {!collapsed && (
               <p className="mb-1 px-4 pt-3 text-[10px] font-semibold uppercase tracking-widest text-slate-500">

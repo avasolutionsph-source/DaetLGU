@@ -94,7 +94,7 @@ const documents: Document[] = [
     dateReceived: '2024-11-18',
     daysInCurrent: 2,
     routing: [
-      { office: "Mayor's Office", action: 'Document created and signed', date: '2024-11-15', time: '09:00 AM', handler: 'Mayor Elmer E. Balbin', status: 'completed' },
+      { office: "Mayor's Office", action: 'Document created and signed', date: '2024-11-15', time: '09:00 AM', handler: 'Mayor Rossano R. Valencia', status: 'completed' },
       { office: 'Records Office', action: 'Received and logged', date: '2024-11-15', time: '10:30 AM', handler: 'Maria Santos', status: 'completed' },
       { office: 'Sangguniang Bayan', action: 'Forwarded for notation', date: '2024-11-18', time: '08:15 AM', handler: 'Pedro Reyes', remarks: 'For notation and implementation', status: 'current' },
     ],
@@ -139,7 +139,7 @@ const documents: Document[] = [
     daysInCurrent: 3,
     routing: [
       { office: 'Municipal Budget Office', action: 'Budget proposal prepared', date: '2024-11-12', time: '08:00 AM', handler: 'Ana Villanueva', status: 'completed' },
-      { office: "Mayor's Office", action: 'Approved', date: '2024-11-13', time: '04:00 PM', handler: 'Mayor Elmer E. Balbin', status: 'completed' },
+      { office: "Mayor's Office", action: 'Approved', date: '2024-11-13', time: '04:00 PM', handler: 'Mayor Rossano R. Valencia', status: 'completed' },
       { office: 'Municipal Accounting Office', action: 'For recording and fund allocation', date: '2024-11-14', time: '09:00 AM', handler: 'Grace Tan', status: 'current' },
     ],
     attachments: [
@@ -224,7 +224,7 @@ const documents: Document[] = [
     routing: [
       { office: 'Municipal Planning Office', action: 'Report compiled from all departments', date: '2024-11-05', time: '09:00 AM', handler: 'Engr. Luis Ramos', status: 'completed' },
       { office: 'Municipal Budget Office', action: 'Financial data verified', date: '2024-11-07', time: '02:00 PM', handler: 'Ana Villanueva', status: 'completed' },
-      { office: "Mayor's Office", action: 'For review and signature', date: '2024-11-08', time: '10:00 AM', handler: 'Mayor Elmer E. Balbin', remarks: 'Deadline: November 30, 2024', status: 'current' },
+      { office: "Mayor's Office", action: 'For review and signature', date: '2024-11-08', time: '10:00 AM', handler: 'Mayor Rossano R. Valencia', remarks: 'Deadline: November 30, 2024', status: 'current' },
     ],
     attachments: [
       { name: 'SGLG-Compliance-Report-2024.pdf', size: '8.5 MB', type: 'PDF' },
@@ -291,7 +291,7 @@ const documents: Document[] = [
     routing: [
       { office: 'Sangguniang Bayan', action: 'Ordinance approved on 3rd reading', date: '2024-11-10', time: '02:00 PM', handler: 'Vice Mayor Carlos Padua', status: 'completed' },
       { office: 'Records Office', action: 'Received and logged', date: '2024-11-11', time: '09:00 AM', handler: 'Maria Santos', status: 'completed' },
-      { office: "Mayor's Office", action: 'Signed into law', date: '2024-11-12', time: '03:00 PM', handler: 'Mayor Elmer E. Balbin', status: 'completed' },
+      { office: "Mayor's Office", action: 'Signed into law', date: '2024-11-12', time: '03:00 PM', handler: 'Mayor Rossano R. Valencia', status: 'completed' },
     ],
     attachments: [
       { name: 'Ordinance-2024-011-Signed.pdf', size: '1.9 MB', type: 'PDF' },
@@ -352,7 +352,7 @@ const documents: Document[] = [
     daysInCurrent: 35,
     routing: [
       { office: 'MDRRMO', action: 'Equipment requisition submitted', date: '2024-10-05', time: '08:00 AM', handler: 'Cmdr. Danilo Reyes', status: 'completed' },
-      { office: "Mayor's Office", action: 'Approved', date: '2024-10-07', time: '11:00 AM', handler: 'Mayor Elmer E. Balbin', status: 'completed' },
+      { office: "Mayor's Office", action: 'Approved', date: '2024-10-07', time: '11:00 AM', handler: 'Mayor Rossano R. Valencia', status: 'completed' },
       { office: 'Municipal Budget Office', action: 'Pending fund availability and procurement process', date: '2024-10-10', time: '09:00 AM', handler: 'Ana Villanueva', remarks: 'Awaiting supplemental budget approval', status: 'current' },
     ],
     attachments: [

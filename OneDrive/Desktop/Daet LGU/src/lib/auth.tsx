@@ -10,16 +10,33 @@ export interface CurrentUser {
   department: string;
 }
 
+interface Credential {
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+const CREDENTIALS: Credential[] = [
+  { email: 'mayor@daet.gov.ph', password: 'mayor123', role: 'mayor' },
+  { email: 'treasury@daet.gov.ph', password: 'treasury123', role: 'treasury' },
+  { email: 'bplo@daet.gov.ph', password: 'bplo123', role: 'bplo' },
+  { email: 'engineering@daet.gov.ph', password: 'engineering123', role: 'engineering' },
+  { email: 'mdrrmo@daet.gov.ph', password: 'mdrrmo123', role: 'mdrrmo' },
+  { email: 'barangay@daet.gov.ph', password: 'barangay123', role: 'barangay' },
+  { email: 'admin@daet.gov.ph', password: 'admin123', role: 'admin' },
+];
+
 interface AuthContextType {
   currentUser: CurrentUser | null;
   isAuthenticated: boolean;
   login: (role: UserRole) => void;
+  loginWithCredentials: (email: string, password: string) => { success: boolean; error?: string };
   logout: () => void;
 }
 
 const ROLE_PROFILES: Record<UserRole, CurrentUser> = {
   mayor: {
-    name: 'Hon. Elmer Panotes',
+    name: 'Hon. Rossano "Ronie" Valencia',
     role: 'mayor',
     roleLabel: "Mayor's Office",
     avatar: 'EP',
@@ -90,6 +107,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('daet_lgu_user', JSON.stringify(user));
   }, []);
 
+  const loginWithCredentials = useCallback((email: string, password: string): { success: boolean; error?: string } => {
+    const trimmedEmail = email.trim().toLowerCase();
+    if (!trimmedEmail || !password) {
+      return { success: false, error: 'Please enter both email and password.' };
+    }
+    const match = CREDENTIALS.find(
+      (c) => c.email === trimmedEmail && c.password === password
+    );
+    if (!match) {
+      return { success: false, error: 'Invalid email or password. Please try again.' };
+    }
+    const user = ROLE_PROFILES[match.role];
+    setCurrentUser(user);
+    localStorage.setItem('daet_lgu_user', JSON.stringify(user));
+    return { success: true };
+  }, []);
+
   const logout = useCallback(() => {
     setCurrentUser(null);
     localStorage.removeItem('daet_lgu_user');
@@ -101,6 +135,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         currentUser,
         isAuthenticated: currentUser !== null,
         login,
+        loginWithCredentials,
         logout,
       }}
     >

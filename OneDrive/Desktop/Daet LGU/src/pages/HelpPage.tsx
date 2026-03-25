@@ -73,7 +73,7 @@ const shortcuts = [
 ];
 
 const quickHelp = [
-  { icon: Rocket, title: 'Getting Started', desc: 'Learn the basics of the SMART LGU ERP system', color: 'text-blue-600', bg: 'bg-blue-50' },
+  { icon: Rocket, title: 'Getting Started', desc: 'Learn the basics of the Maogmang Daet Smart System', color: 'text-blue-600', bg: 'bg-blue-50' },
   { icon: FileQuestion, title: 'FAQ', desc: 'Find answers to commonly asked questions', color: 'text-amber-600', bg: 'bg-amber-50' },
   { icon: BookOpen, title: 'User Guide', desc: 'Detailed documentation for all modules', color: 'text-emerald-600', bg: 'bg-emerald-50' },
   { icon: MessageCircle, title: 'Contact Support', desc: 'Get help from the IT support team', color: 'text-purple-600', bg: 'bg-purple-50' },

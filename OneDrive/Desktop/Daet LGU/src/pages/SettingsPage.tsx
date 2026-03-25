@@ -291,7 +291,7 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="bg-gray-50 rounded-xl p-4">
                   <p className="text-gray-500 mb-1">System Version</p>
-                  <p className="text-gray-900 font-semibold">SMART LGU ERP v2.4.1</p>
+                  <p className="text-gray-900 font-semibold">Maogmang Daet Smart System v2.4.1</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-4">
                   <p className="text-gray-500 mb-1">Last Updated</p>

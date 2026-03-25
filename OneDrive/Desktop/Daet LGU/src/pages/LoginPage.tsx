@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, type UserRole } from '../lib/auth';
 import {
@@ -76,12 +77,33 @@ const SYSTEM_HIGHLIGHTS = [
 ];
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, loginWithCredentials } = useAuth();
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRoleLogin = (role: UserRole) => {
     login(role);
     navigate('/dashboard');
+  };
+
+  const handleCredentialLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    // Simulate a brief delay for realism
+    setTimeout(() => {
+      const result = loginWithCredentials(email, password);
+      if (result.success) {
+        navigate('/dashboard');
+      } else {
+        setError(result.error || 'Login failed.');
+      }
+      setIsLoading(false);
+    }, 600);
   };
 
   return (
@@ -106,9 +128,9 @@ export default function LoginPage() {
           </div>
 
           <h1 className="text-3xl font-bold leading-tight xl:text-4xl">
-            SMART LGU
+            Maogmang Daet
             <br />
-            ERP System
+            Smart System
           </h1>
           <p className="mt-3 text-lg font-medium text-blue-200">
             Digital Command Center for Municipal Operations
@@ -151,7 +173,7 @@ export default function LoginPage() {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
               D
             </div>
-            <h1 className="text-xl font-bold text-gray-900">SMART LGU ERP</h1>
+            <h1 className="text-xl font-bold text-gray-900">Maogmang Daet Smart System</h1>
             <p className="text-sm text-gray-500">Municipality of Daet</p>
           </div>
 
@@ -204,11 +226,17 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Traditional Login Form (non-functional, UI only) */}
+          {/* Credential Login Form */}
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleCredentialLogin}
             className="space-y-4"
           >
+            {error && (
+              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-gray-700">
                 Email address
@@ -218,6 +246,8 @@ export default function LoginPage() {
                 <input
                   id="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(''); }}
                   placeholder="you@daet.gov.ph"
                   className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-700 placeholder-gray-400 outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
                 />
@@ -232,6 +262,8 @@ export default function LoginPage() {
                 <input
                   id="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setError(''); }}
                   placeholder="Enter your password"
                   className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-700 placeholder-gray-400 outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
                 />
@@ -253,10 +285,23 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 active:bg-blue-800"
+              disabled={isLoading}
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 active:bg-blue-800 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <CheckCircle2 className="h-4 w-4" />
-              Sign in
+              {isLoading ? (
+                <>
+                  <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 className="h-4 w-4" />
+                  Sign in
+                </>
+              )}
             </button>
           </form>
 

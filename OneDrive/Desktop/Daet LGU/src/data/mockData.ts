@@ -1,5 +1,5 @@
 // =============================================================================
-// SMART LGU ERP System – Municipality of Daet, Camarines Norte
+// Maogmang Daet Smart System – Municipality of Daet, Camarines Norte
 // Comprehensive Mock Data
 // =============================================================================
 
@@ -2553,7 +2553,7 @@ export const announcements: Announcement[] = [
   {
     id: 'ANN-002',
     title: 'System Maintenance Notice - March 29',
-    content: 'The SMART LGU ERP System will undergo scheduled maintenance on March 29, 2026, from 10 PM to 2 AM. Please ensure all pending transactions are completed before the maintenance window.',
+    content: 'The Maogmang Daet Smart System will undergo scheduled maintenance on March 29, 2026, from 10 PM to 2 AM. Please ensure all pending transactions are completed before the maintenance window.',
     author: 'IT Division',
     department: 'General Services',
     date: '2026-03-20',

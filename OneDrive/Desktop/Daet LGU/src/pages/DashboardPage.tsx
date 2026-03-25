@@ -38,9 +38,20 @@ import {
   MapPin,
   ArrowRight,
   Activity,
+  Flame,
+  Droplets,
+  Car,
+  HeartPulse,
+  TrendingUp,
+  Receipt,
+  CircleDollarSign,
+  FolderOpen,
+  Home,
+  Phone,
 } from 'lucide-react';
 import StatCard from '../components/ui/StatCard';
 import Badge from '../components/ui/Badge';
+import { useAuth } from '../lib/auth';
 import {
   monthlyRevenue,
   permitApprovalTrend,
@@ -203,9 +214,13 @@ function SectionCard({
   );
 }
 
-// ─── Main Dashboard Page ──────────────────────────────────────────────────────
+// ─── Mayor / Admin Dashboard (Full Executive View) ──────────────────────────
 
 export default function DashboardPage() {
+  return <MayorDashboard />;
+}
+
+function MayorDashboard() {
   const [dateFilter, setDateFilter] = useState('this_month');
 
   return (
