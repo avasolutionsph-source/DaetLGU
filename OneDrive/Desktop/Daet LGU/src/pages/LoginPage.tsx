@@ -14,6 +14,7 @@ import {
   Globe,
   Lock,
   Mail,
+  Megaphone,
 } from 'lucide-react';
 
 interface RoleCard {
@@ -67,6 +68,13 @@ const ROLE_CARDS: RoleCard[] = [
     icon: Building2,
     color: 'from-cyan-500 to-blue-600',
   },
+  {
+    role: 'citizen',
+    label: 'Citizen',
+    department: 'Report Emergency',
+    icon: Megaphone,
+    color: 'from-rose-500 to-red-600',
+  },
 ];
 
 const SYSTEM_HIGHLIGHTS = [
@@ -84,9 +92,20 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const ROLE_HOME: Record<UserRole, string> = {
+    mayor: '/dashboard',
+    treasury: '/treasury',
+    bplo: '/business-permits',
+    engineering: '/infrastructure',
+    mdrrmo: '/emergency',
+    barangay: '/barangay',
+    admin: '/dashboard',
+    citizen: '/citizen-report',
+  };
+
   const handleRoleLogin = (role: UserRole) => {
     login(role);
-    navigate('/dashboard');
+    navigate(ROLE_HOME[role]);
   };
 
   const handleCredentialLogin = (e: React.FormEvent) => {
@@ -98,7 +117,9 @@ export default function LoginPage() {
     setTimeout(() => {
       const result = loginWithCredentials(email, password);
       if (result.success) {
-        navigate('/dashboard');
+        // Determine role from email to navigate to correct page
+        const roleFromEmail = email.trim().toLowerCase().split('@')[0] as UserRole;
+        navigate(ROLE_HOME[roleFromEmail] || '/dashboard');
       } else {
         setError(result.error || 'Login failed.');
       }

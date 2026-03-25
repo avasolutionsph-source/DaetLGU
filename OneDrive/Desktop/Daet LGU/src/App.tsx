@@ -23,6 +23,7 @@ import SettingsPage from './pages/SettingsPage';
 import AuditTrailPage from './pages/AuditTrailPage';
 import UserManagementPage from './pages/UserManagementPage';
 import HelpPage from './pages/HelpPage';
+import CitizenReportPage from './pages/CitizenReportPage';
 import type { ReactNode } from 'react';
 
 // ─── Role-based access map ──────────────────────────────────────────────────
@@ -49,6 +50,7 @@ const ROUTE_ACCESS: Record<string, UserRole[]> = {
   '/audit-trail':      ['mayor', 'admin'],
   '/users':            ['admin'],
   '/help':             ['mayor', 'treasury', 'bplo', 'engineering', 'mdrrmo', 'barangay', 'admin'],
+  '/citizen-report':   ['citizen'],
 };
 
 // Default landing page per role
@@ -60,6 +62,7 @@ const ROLE_HOME: Record<UserRole, string> = {
   mdrrmo:      '/emergency',
   barangay:    '/barangay',
   admin:       '/dashboard',
+  citizen:     '/citizen-report',
 };
 
 // ─── Route guards ────────────────────────────────────────────────────────────
@@ -105,6 +108,15 @@ function AppRoutes() {
           <PublicRoute>
             <LoginPage />
           </PublicRoute>
+        }
+      />
+      {/* Citizen portal — standalone layout, no sidebar */}
+      <Route
+        path="/citizen-report"
+        element={
+          <ProtectedRoute>
+            <CitizenReportPage />
+          </ProtectedRoute>
         }
       />
       <Route

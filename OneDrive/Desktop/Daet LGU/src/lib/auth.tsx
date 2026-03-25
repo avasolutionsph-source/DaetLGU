@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 
-export type UserRole = 'mayor' | 'treasury' | 'bplo' | 'engineering' | 'mdrrmo' | 'barangay' | 'admin';
+export type UserRole = 'mayor' | 'treasury' | 'bplo' | 'engineering' | 'mdrrmo' | 'barangay' | 'admin' | 'citizen';
 
 export interface CurrentUser {
   name: string;
@@ -24,6 +24,7 @@ const CREDENTIALS: Credential[] = [
   { email: 'mdrrmo@daet.gov.ph', password: 'mdrrmo123', role: 'mdrrmo' },
   { email: 'barangay@daet.gov.ph', password: 'barangay123', role: 'barangay' },
   { email: 'admin@daet.gov.ph', password: 'admin123', role: 'admin' },
+  { email: 'citizen@daet.gov.ph', password: 'citizen123', role: 'citizen' },
 ];
 
 interface AuthContextType {
@@ -83,6 +84,13 @@ const ROLE_PROFILES: Record<UserRole, CurrentUser> = {
     roleLabel: 'Administrator',
     avatar: 'SA',
     department: 'IT & Systems Administration',
+  },
+  citizen: {
+    name: 'Juan Dela Cruz',
+    role: 'citizen',
+    roleLabel: 'Citizen',
+    avatar: 'JD',
+    department: 'Citizen Portal',
   },
 };
 
