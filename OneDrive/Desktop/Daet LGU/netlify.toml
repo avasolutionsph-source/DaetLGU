@@ -1,5 +1,4 @@
 [build]
-  base = "OneDrive/Desktop/Daet LGU"
   command = "npm install && npm run build"
   publish = "dist"
 
