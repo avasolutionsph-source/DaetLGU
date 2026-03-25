@@ -100,7 +100,7 @@ export default function LoginPage() {
     mdrrmo: '/emergency',
     barangay: '/barangay',
     admin: '/dashboard',
-    citizen: '/citizen-report',
+    citizen: '/citizen-hub',
   };
 
   const handleRoleLogin = (role: UserRole) => {

@@ -24,6 +24,14 @@ import AuditTrailPage from './pages/AuditTrailPage';
 import UserManagementPage from './pages/UserManagementPage';
 import HelpPage from './pages/HelpPage';
 import CitizenReportPage from './pages/CitizenReportPage';
+import CitizenDashboard from './pages/citizen/CitizenDashboard';
+import CitizenDocuments from './pages/citizen/CitizenDocuments';
+import CitizenTrackRequests from './pages/citizen/CitizenTrackRequests';
+import CitizenComplaint from './pages/citizen/CitizenComplaint';
+import CitizenAnnouncements from './pages/citizen/CitizenAnnouncements';
+import CitizenPayments from './pages/citizen/CitizenPayments';
+import CitizenProfile from './pages/citizen/CitizenProfile';
+import CitizenDirectory from './pages/citizen/CitizenDirectory';
 import type { ReactNode } from 'react';
 
 // ─── Role-based access map ──────────────────────────────────────────────────
@@ -62,7 +70,7 @@ const ROLE_HOME: Record<UserRole, string> = {
   mdrrmo:      '/emergency',
   barangay:    '/barangay',
   admin:       '/dashboard',
-  citizen:     '/citizen-report',
+  citizen:     '/citizen-hub',
 };
 
 // ─── Route guards ────────────────────────────────────────────────────────────
@@ -111,14 +119,15 @@ function AppRoutes() {
         }
       />
       {/* Citizen portal — standalone layout, no sidebar */}
-      <Route
-        path="/citizen-report"
-        element={
-          <ProtectedRoute>
-            <CitizenReportPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/citizen-hub" element={<ProtectedRoute><CitizenDashboard /></ProtectedRoute>} />
+      <Route path="/citizen-report" element={<ProtectedRoute><CitizenReportPage /></ProtectedRoute>} />
+      <Route path="/citizen-documents" element={<ProtectedRoute><CitizenDocuments /></ProtectedRoute>} />
+      <Route path="/citizen-track" element={<ProtectedRoute><CitizenTrackRequests /></ProtectedRoute>} />
+      <Route path="/citizen-complaint" element={<ProtectedRoute><CitizenComplaint /></ProtectedRoute>} />
+      <Route path="/citizen-announcements" element={<ProtectedRoute><CitizenAnnouncements /></ProtectedRoute>} />
+      <Route path="/citizen-payments" element={<ProtectedRoute><CitizenPayments /></ProtectedRoute>} />
+      <Route path="/citizen-profile" element={<ProtectedRoute><CitizenProfile /></ProtectedRoute>} />
+      <Route path="/citizen-directory" element={<ProtectedRoute><CitizenDirectory /></ProtectedRoute>} />
       <Route
         path="/"
         element={
